@@ -31,15 +31,14 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTrangChuNhanVien));
             this.panelContainer = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnQuanLyKhachHang = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lblUsername = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnDangXuat = new System.Windows.Forms.Button();
             this.btnQuanLyLichTrinh = new System.Windows.Forms.Button();
-            this.btnHoTroHanhKhach = new System.Windows.Forms.Button();
-            this.btnThongKeDoanhThu = new System.Windows.Forms.Button();
+            this.btnQuanLyDoanhThu = new System.Windows.Forms.Button();
             this.btnQuanLyXeKhach = new System.Windows.Forms.Button();
-            this.btnQuanLyNguoiDung = new System.Windows.Forms.Button();
             this.btnQuanLyVeXe = new System.Windows.Forms.Button();
             this.btnQuanLyKhieuNai = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
@@ -49,33 +48,50 @@
             // panelContainer
             // 
             this.panelContainer.BackColor = System.Drawing.Color.White;
-            this.panelContainer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelContainer.Location = new System.Drawing.Point(250, 0);
+            this.panelContainer.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelContainer.Location = new System.Drawing.Point(254, 0);
             this.panelContainer.Name = "panelContainer";
-            this.panelContainer.Size = new System.Drawing.Size(1000, 761);
+            this.panelContainer.Size = new System.Drawing.Size(1130, 761);
             this.panelContainer.TabIndex = 5;
             // 
             // panel1
             // 
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(73)))), ((int)(((byte)(73)))), ((int)(((byte)(173)))));
+            this.panel1.Controls.Add(this.btnQuanLyKhachHang);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.lblUsername);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.btnDangXuat);
             this.panel1.Controls.Add(this.btnQuanLyLichTrinh);
-            this.panel1.Controls.Add(this.btnHoTroHanhKhach);
-            this.panel1.Controls.Add(this.btnThongKeDoanhThu);
+            this.panel1.Controls.Add(this.btnQuanLyDoanhThu);
             this.panel1.Controls.Add(this.btnQuanLyXeKhach);
-            this.panel1.Controls.Add(this.btnQuanLyNguoiDung);
             this.panel1.Controls.Add(this.btnQuanLyVeXe);
             this.panel1.Controls.Add(this.btnQuanLyKhieuNai);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(250, 761);
             this.panel1.TabIndex = 4;
+            //this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // btnQuanLyKhachHang
+            // 
+            this.btnQuanLyKhachHang.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnQuanLyKhachHang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuanLyKhachHang.ForeColor = System.Drawing.Color.White;
+            this.btnQuanLyKhachHang.Image = global::QuanLyBenXe.Properties.Resources.customer_satisfaction;
+            this.btnQuanLyKhachHang.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnQuanLyKhachHang.Location = new System.Drawing.Point(14, 222);
+            this.btnQuanLyKhachHang.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnQuanLyKhachHang.Name = "btnQuanLyKhachHang";
+            this.btnQuanLyKhachHang.Size = new System.Drawing.Size(220, 40);
+            this.btnQuanLyKhachHang.TabIndex = 3;
+            this.btnQuanLyKhachHang.Text = "Quản lý khách hàng";
+            this.btnQuanLyKhachHang.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnQuanLyKhachHang.UseVisualStyleBackColor = true;
+            this.btnQuanLyKhachHang.Click += new System.EventHandler(this.btnQuanLyKhachHang_Click);
             // 
             // label1
             // 
@@ -118,12 +134,13 @@
             this.btnDangXuat.Image = global::QuanLyBenXe.Properties.Resources.logout__1_;
             this.btnDangXuat.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDangXuat.Location = new System.Drawing.Point(14, 706);
-            this.btnDangXuat.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnDangXuat.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnDangXuat.Name = "btnDangXuat";
             this.btnDangXuat.Size = new System.Drawing.Size(220, 40);
             this.btnDangXuat.TabIndex = 1;
             this.btnDangXuat.Text = "Đăng xuất";
             this.btnDangXuat.UseVisualStyleBackColor = true;
+            this.btnDangXuat.Click += new System.EventHandler(this.btnDangXuat_Click);
             // 
             // btnQuanLyLichTrinh
             // 
@@ -132,46 +149,32 @@
             this.btnQuanLyLichTrinh.ForeColor = System.Drawing.Color.White;
             this.btnQuanLyLichTrinh.Image = global::QuanLyBenXe.Properties.Resources.map_travel;
             this.btnQuanLyLichTrinh.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQuanLyLichTrinh.Location = new System.Drawing.Point(14, 354);
-            this.btnQuanLyLichTrinh.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnQuanLyLichTrinh.Location = new System.Drawing.Point(13, 370);
+            this.btnQuanLyLichTrinh.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnQuanLyLichTrinh.Name = "btnQuanLyLichTrinh";
             this.btnQuanLyLichTrinh.Size = new System.Drawing.Size(220, 40);
             this.btnQuanLyLichTrinh.TabIndex = 1;
             this.btnQuanLyLichTrinh.Text = "Quản lý lịch trình";
             this.btnQuanLyLichTrinh.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnQuanLyLichTrinh.UseVisualStyleBackColor = true;
+            this.btnQuanLyLichTrinh.Click += new System.EventHandler(this.btnQuanLyLichTrinh_Click);
             // 
-            // btnHoTroHanhKhach
+            // btnQuanLyDoanhThu
             // 
-            this.btnHoTroHanhKhach.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnHoTroHanhKhach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHoTroHanhKhach.ForeColor = System.Drawing.Color.White;
-            this.btnHoTroHanhKhach.Image = global::QuanLyBenXe.Properties.Resources.technical_support;
-            this.btnHoTroHanhKhach.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnHoTroHanhKhach.Location = new System.Drawing.Point(14, 554);
-            this.btnHoTroHanhKhach.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnHoTroHanhKhach.Name = "btnHoTroHanhKhach";
-            this.btnHoTroHanhKhach.Size = new System.Drawing.Size(220, 40);
-            this.btnHoTroHanhKhach.TabIndex = 1;
-            this.btnHoTroHanhKhach.Text = "Hỗ trợ hành khách";
-            this.btnHoTroHanhKhach.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnHoTroHanhKhach.UseVisualStyleBackColor = true;
-            // 
-            // btnThongKeDoanhThu
-            // 
-            this.btnThongKeDoanhThu.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnThongKeDoanhThu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThongKeDoanhThu.ForeColor = System.Drawing.Color.White;
-            this.btnThongKeDoanhThu.Image = global::QuanLyBenXe.Properties.Resources.analytics;
-            this.btnThongKeDoanhThu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnThongKeDoanhThu.Location = new System.Drawing.Point(14, 504);
-            this.btnThongKeDoanhThu.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnThongKeDoanhThu.Name = "btnThongKeDoanhThu";
-            this.btnThongKeDoanhThu.Size = new System.Drawing.Size(220, 40);
-            this.btnThongKeDoanhThu.TabIndex = 1;
-            this.btnThongKeDoanhThu.Text = "Thống kê doanh thu";
-            this.btnThongKeDoanhThu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnThongKeDoanhThu.UseVisualStyleBackColor = true;
+            this.btnQuanLyDoanhThu.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnQuanLyDoanhThu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuanLyDoanhThu.ForeColor = System.Drawing.Color.White;
+            this.btnQuanLyDoanhThu.Image = global::QuanLyBenXe.Properties.Resources.analytics;
+            this.btnQuanLyDoanhThu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnQuanLyDoanhThu.Location = new System.Drawing.Point(13, 472);
+            this.btnQuanLyDoanhThu.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnQuanLyDoanhThu.Name = "btnQuanLyDoanhThu";
+            this.btnQuanLyDoanhThu.Size = new System.Drawing.Size(220, 40);
+            this.btnQuanLyDoanhThu.TabIndex = 1;
+            this.btnQuanLyDoanhThu.Text = "Quản lý doanh thu";
+            this.btnQuanLyDoanhThu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnQuanLyDoanhThu.UseVisualStyleBackColor = true;
+            this.btnQuanLyDoanhThu.Click += new System.EventHandler(this.btnQuanLyDoanhThu_Click);
             // 
             // btnQuanLyXeKhach
             // 
@@ -180,30 +183,15 @@
             this.btnQuanLyXeKhach.ForeColor = System.Drawing.Color.White;
             this.btnQuanLyXeKhach.Image = global::QuanLyBenXe.Properties.Resources.bus_school;
             this.btnQuanLyXeKhach.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQuanLyXeKhach.Location = new System.Drawing.Point(14, 404);
-            this.btnQuanLyXeKhach.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnQuanLyXeKhach.Location = new System.Drawing.Point(13, 324);
+            this.btnQuanLyXeKhach.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnQuanLyXeKhach.Name = "btnQuanLyXeKhach";
             this.btnQuanLyXeKhach.Size = new System.Drawing.Size(220, 40);
             this.btnQuanLyXeKhach.TabIndex = 1;
             this.btnQuanLyXeKhach.Text = "Quản lý xe khách";
             this.btnQuanLyXeKhach.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnQuanLyXeKhach.UseVisualStyleBackColor = true;
-            // 
-            // btnQuanLyNguoiDung
-            // 
-            this.btnQuanLyNguoiDung.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnQuanLyNguoiDung.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuanLyNguoiDung.ForeColor = System.Drawing.Color.White;
-            this.btnQuanLyNguoiDung.Image = global::QuanLyBenXe.Properties.Resources.programmer;
-            this.btnQuanLyNguoiDung.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQuanLyNguoiDung.Location = new System.Drawing.Point(14, 254);
-            this.btnQuanLyNguoiDung.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnQuanLyNguoiDung.Name = "btnQuanLyNguoiDung";
-            this.btnQuanLyNguoiDung.Size = new System.Drawing.Size(220, 40);
-            this.btnQuanLyNguoiDung.TabIndex = 1;
-            this.btnQuanLyNguoiDung.Text = "Quản lý người dùng";
-            this.btnQuanLyNguoiDung.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnQuanLyNguoiDung.UseVisualStyleBackColor = true;
+            this.btnQuanLyXeKhach.Click += new System.EventHandler(this.btnQuanLyXeKhach_Click);
             // 
             // btnQuanLyVeXe
             // 
@@ -212,14 +200,15 @@
             this.btnQuanLyVeXe.ForeColor = System.Drawing.Color.White;
             this.btnQuanLyVeXe.Image = global::QuanLyBenXe.Properties.Resources.ticket;
             this.btnQuanLyVeXe.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQuanLyVeXe.Location = new System.Drawing.Point(14, 304);
-            this.btnQuanLyVeXe.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnQuanLyVeXe.Location = new System.Drawing.Point(13, 272);
+            this.btnQuanLyVeXe.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnQuanLyVeXe.Name = "btnQuanLyVeXe";
             this.btnQuanLyVeXe.Size = new System.Drawing.Size(220, 40);
             this.btnQuanLyVeXe.TabIndex = 1;
             this.btnQuanLyVeXe.Text = "Quản lý vé xe";
             this.btnQuanLyVeXe.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnQuanLyVeXe.UseVisualStyleBackColor = true;
+            this.btnQuanLyVeXe.Click += new System.EventHandler(this.btnQuanLyVeXe_Click);
             // 
             // btnQuanLyKhieuNai
             // 
@@ -228,21 +217,22 @@
             this.btnQuanLyKhieuNai.ForeColor = System.Drawing.Color.White;
             this.btnQuanLyKhieuNai.Image = global::QuanLyBenXe.Properties.Resources.complain;
             this.btnQuanLyKhieuNai.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQuanLyKhieuNai.Location = new System.Drawing.Point(14, 454);
-            this.btnQuanLyKhieuNai.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnQuanLyKhieuNai.Location = new System.Drawing.Point(13, 422);
+            this.btnQuanLyKhieuNai.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnQuanLyKhieuNai.Name = "btnQuanLyKhieuNai";
             this.btnQuanLyKhieuNai.Size = new System.Drawing.Size(220, 40);
             this.btnQuanLyKhieuNai.TabIndex = 1;
             this.btnQuanLyKhieuNai.Text = "Quản lý khiếu nại";
             this.btnQuanLyKhieuNai.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnQuanLyKhieuNai.UseVisualStyleBackColor = true;
+            this.btnQuanLyKhieuNai.Click += new System.EventHandler(this.btnQuanLyKhieuNai_Click);
             // 
             // FrmTrangChuNhanVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1250, 761);
+            this.ClientSize = new System.Drawing.Size(1384, 761);
             this.Controls.Add(this.panelContainer);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
@@ -252,7 +242,9 @@
             this.MinimizeBox = false;
             this.Name = "FrmTrangChuNhanVien";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "BẾN XE XANH";
+            this.Text = "Trang chủ nhân viên";
+            this.Load += new System.EventHandler(this.FrmTrangChuNhanVien_Load);
+            this.Shown += new System.EventHandler(this.FrmTrangChuNhanVien_Shown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -269,11 +261,10 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnDangXuat;
         private System.Windows.Forms.Button btnQuanLyLichTrinh;
-        private System.Windows.Forms.Button btnHoTroHanhKhach;
-        private System.Windows.Forms.Button btnThongKeDoanhThu;
+        private System.Windows.Forms.Button btnQuanLyDoanhThu;
         private System.Windows.Forms.Button btnQuanLyXeKhach;
-        private System.Windows.Forms.Button btnQuanLyNguoiDung;
         private System.Windows.Forms.Button btnQuanLyVeXe;
         private System.Windows.Forms.Button btnQuanLyKhieuNai;
+        private System.Windows.Forms.Button btnQuanLyKhachHang;
     }
 }

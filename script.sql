@@ -51,20 +51,24 @@ CREATE TABLE KHACHHANG(
 	SoDienThoai char(10) null,
 	MaQuyenHan int default 0,
 	NgayTao DATETIME DEFAULT GETDATE(),
+	TrangThai tinyint,
 	constraint fk_KHACHHANG_QUYENHAN foreign key(MaQuyenHan) references QUYENHAN(MaQuyenHan),
 )
 go
+
 
 -- 0: Đổi mật khẩu
 CREATE TABLE XACMINHTAIKHOAN (
     MaXacMinh INT IDENTITY PRIMARY KEY, 
     MaKhachHang INT NOT NULL,
     MaToken CHAR(6) NOT NULL,
-    LoaiXacMinh TINYINT not null,
     NgayTao DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (MaKhachHang) REFERENCES KHACHHANG(MaKhachHang) 
         ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
+
 go
 
 -- 0: Hoạt động
@@ -77,21 +81,27 @@ CREATE TABLE XEKHACH (
     BienSo VARCHAR(20) UNIQUE NOT NULL,
     LoaiXe NVARCHAR(50) NOT NULL,
     TrangThai tinyint DEFAULT 0,
-    NgayTao DATETIME DEFAULT GETDATE()
+    NgayTao DATETIME DEFAULT GETDATE(),
+
 );
 go
 
+-- Trạng thái
+-- 0: Hoạt động
+-- 1: Ngừng hoạt động
 CREATE TABLE LOAIVE (
 	MaLoaiVe INT IDENTITY PRIMARY KEY,
     TenLoaiVe NVARCHAR(50) not null, 
-    GiaVe DECIMAL(10, 2) NOT NULL CHECK (GiaVe >= 0)
+    GiaVe DECIMAL(10, 2) NOT NULL CHECK (GiaVe >= 0),
+	TrangThai tinyint DEFAULT 0,
+	NgayTao DATETIME DEFAULT GETDATE(),
 );
 go
 
 -- 0: Đã đặt
 -- 1: Đã huỷ
-CREATE TABLE VEXE (
-    MaVe INT IDENTITY PRIMARY KEY,
+CREATE TABLE LICHSUDATVE (
+    MaLichSuDatVe INT IDENTITY PRIMARY KEY,
     MaKhachHang INT NULL,
     MaXe INT NOT NULL,
     MaLoaiVe int not null, 
@@ -135,4 +145,15 @@ CREATE TABLE KHIEUNAI (
     FOREIGN KEY (MaKhachHang) REFERENCES KHACHHANG(MaKhachHang)
         ON DELETE CASCADE ON UPDATE CASCADE           
 );
+
+
+-- 0: Đã chấm công
+-- 1: Chưa chấm công
+CREATE TABLE CHAMCONG (
+	MaChamCong INT IDENTITY PRIMARY KEY,           
+	NgayChamCong datetime default getDate(),
+	TrangThai tinyint default 1,
+	MaNhanVien int,
+	FOREIGN KEY (MaNhanVien) REFERENCES NHANVIEN(MaNhanVien) ON DELETE CASCADE
+)
 

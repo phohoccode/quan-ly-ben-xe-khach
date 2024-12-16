@@ -79,7 +79,7 @@ INSERT INTO LOAIVE (TenLoaiVe, GiaVe) VALUES
 go
 
 -- Bảng vé xe
-INSERT INTO VEXE (MaKhachHang, MaXe, MaLoaiVe, TrangThaiVe) VALUES
+INSERT INTO LICHSUDATVE (MaKhachHang, MaXe, MaLoaiVe, TrangThaiVe) VALUES
 (1, 1, 1, 0),
 (2, 2, 2, 0),
 (3, 3, 3, 0),

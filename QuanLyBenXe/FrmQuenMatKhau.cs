@@ -45,13 +45,13 @@ namespace QuanLyBenXe
             }
         }
 
-        private string GenerateToken()
+        private string TaoMaXacThuc()
         {
             Random random = new Random();
             return random.Next(100000, 999999).ToString(); // Mã xác thực 6 chữ số
         }
 
-        private void sendToken(string email, string token)
+        private bool sendToken(string email, string token)
         {
             try
             {
@@ -74,27 +74,27 @@ namespace QuanLyBenXe
 
                 // Gửi email (thay vì từ đối tượng MailAddress, ta dùng trực tiếp chuỗi email)
                 smtp.Send(fromAddress.Address, email, title, content);
+
+                return true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khi gửi email: {ex.Message}");
+                return false;
             }
         }
 
-        private void ptbClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
+       
         private void btnPrev_Click(object sender, EventArgs e)
         {
             showForm(new FrmDangNhap());
             this.Hide();
         }
 
-        private async void btnContinute_Click(object sender, EventArgs e)
+        private void btnContinute_Click(object sender, EventArgs e)
         {
             string email = txtEmail.Text.Trim();
+
 
             if (!checkValidEmail(email))
             {
@@ -102,14 +102,21 @@ namespace QuanLyBenXe
                 return;
             }
 
-
-            string token = GenerateToken();
+            string MaXacThuc = TaoMaXacThuc();
 
             btnContinute.Enabled = false;
             btnPrev.Enabled = false;
 
             // gửi mã OTP qua email
-            await Task.Run(() => sendToken(email, token));
+            bool check_SendToken = sendToken(email, MaXacThuc);
+
+            if (!check_SendToken)
+            {
+                MessageBox.Show("Gửi mã xác thực thất bại!");
+                btnContinute.Enabled = true;
+                btnPrev.Enabled = true;
+                return;
+            }
 
             btnContinute.Enabled = true;
             btnPrev.Enabled = true;
@@ -126,7 +133,7 @@ namespace QuanLyBenXe
 
             try
             {
-                string Sql_FindEmail = $@"Select * from KHACHHANG where Email = '{email}'";
+                string Sql_FindEmail = $@"SELECT * FROM KHACHHANG WHERE Email = '{email}'";
 
                 SqlDataReader drd = conn.executeSQL(Sql_FindEmail);
 
@@ -141,7 +148,7 @@ namespace QuanLyBenXe
 
                 MessageBox.Show("Mã xác thực đã được gửi đến email của bạn!");
 
-                int userId = 0;
+                int userId = -1;
 
                 while (drd.Read())
                 {
@@ -151,7 +158,7 @@ namespace QuanLyBenXe
                 drd.Close();
 
                 string Sql_InsetTokenToSql =
-                    $@"Insert into XACMINHTAIKHOAN (MaKhachHang, MaToken, LoaiXacMinh) values ('{userId}','{token}', 0)";
+                    $@"INSERT INTO XACMINHTAIKHOAN (MaKhachHang, MaToken) VALUES ('{userId}','{MaXacThuc}')";
 
                 int rows = conn.executeUpdate(Sql_InsetTokenToSql);
 
@@ -167,13 +174,11 @@ namespace QuanLyBenXe
 
                 conn.closeConn();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                MessageBox.Show("Có lỗi xảy ra! Vui lòng thử lại sau!");
+                MessageBox.Show("Có lỗi xảy ra! Vui lòng thử lại sau!" + ex);
             }
 
-           
         }
 
         private void FrmQuenMatKhau_Load(object sender, EventArgs e)

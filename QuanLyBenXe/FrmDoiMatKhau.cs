@@ -56,7 +56,7 @@ namespace QuanLyBenXe
             {
                 string OTP = txtToken.Text;
 
-                string Sql_CheckOTP = $@"Select * from XACMINHTAIKHOAN where MaToken = '{OTP}'";
+                string Sql_CheckOTP = $@"SELECT * FROM XACMINHTAIKHOAN WHERE MaToken = '{OTP}'";
 
                 SqlDataReader drd = conn.executeSQL(Sql_CheckOTP);
 
@@ -73,7 +73,7 @@ namespace QuanLyBenXe
 
                 string newPassword = txtPassword.Text;
 
-                string Sql_UpdatePassword = $@"Update KHACHHANG set MatKhau = '{newPassword}'";
+                string Sql_UpdatePassword = $@"UPDATE KHACHHANG SET MatKhau = '{newPassword}'";
 
                 int rows = conn.executeUpdate(Sql_UpdatePassword);
 
@@ -95,8 +95,6 @@ namespace QuanLyBenXe
             {
                 MessageBox.Show("Có lỗi xảy ra! Vui lòng thử lại sau!");
             }
-
-           
         }
 
         private void btnPrev_Click(object sender, EventArgs e)

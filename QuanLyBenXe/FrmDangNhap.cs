@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Net.Mail;
 using System.Windows.Forms;
 
 namespace QuanLyBenXe
@@ -21,10 +22,11 @@ namespace QuanLyBenXe
         {
             try
             {
-                var mailAddress = new System.Net.Mail.MailAddress(email);
-                return mailAddress.Address == email;
+                MailAddress mail = new MailAddress(email);
+
+                return true;
             }
-            catch
+            catch (FormatException)
             {
                 return false;
             }
@@ -101,7 +103,11 @@ namespace QuanLyBenXe
                         email = drd_KhachHang["Email"].ToString();
                         userId = drd_KhachHang["MaKhachHang"].ToString();
 
-                        showForm(new FrmTrangChuAdmin());
+                        if (roleId == "1")
+                        {
+                            showForm(new FrmTrangChuKhachHang());
+                        }
+
                         this.Hide();
                     }
 
@@ -124,7 +130,17 @@ namespace QuanLyBenXe
                             email = drd_NhanVien["Email"].ToString();
                             userId = drd_NhanVien["MaNhanVien"].ToString();
 
-                            showForm(new FrmTrangChuAdmin());
+
+                            if (roleId == "2")
+                            {
+                                showForm(new FrmTrangChuNhanVien());
+                            }
+                            else if (roleId == "3")
+                            {
+                                showForm(new FrmTrangChuAdmin());
+
+                            }
+
                             this.Hide();
                         }
 
@@ -142,9 +158,10 @@ namespace QuanLyBenXe
             {
                 MessageBox.Show("Có lỗi xảy ra! Vui lòng thử lại sau!");
             }
-
-
-            conn.closeConn();
+            finally
+            {
+                conn.closeConn();
+            }
         }
 
         private void linkRegister_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

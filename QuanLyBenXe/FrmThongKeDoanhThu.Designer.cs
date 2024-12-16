@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmThongKeDoanhThu));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panelCustom = new System.Windows.Forms.Panel();
             this.btnLamMoi = new System.Windows.Forms.Button();
@@ -42,11 +42,11 @@
             this.rdbTatCa = new System.Windows.Forms.RadioButton();
             this.rdbHienTai = new System.Windows.Forms.RadioButton();
             this.dgvDoanhThu = new System.Windows.Forms.DataGridView();
-            this.btnInThongKe = new System.Windows.Forms.Button();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.chartDoanhThu = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.lblTongdoanhThu = new System.Windows.Forms.Label();
+            this.btnInThongKe = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panelCustom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDoanhThu)).BeginInit();
@@ -59,7 +59,7 @@
             this.groupBox1.Controls.Add(this.rdbTuyChinh);
             this.groupBox1.Controls.Add(this.rdbTatCa);
             this.groupBox1.Controls.Add(this.rdbHienTai);
-            this.groupBox1.Location = new System.Drawing.Point(841, 365);
+            this.groupBox1.Location = new System.Drawing.Point(611, 365);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(277, 282);
             this.groupBox1.TabIndex = 5;
@@ -157,24 +157,12 @@
             this.dgvDoanhThu.BackgroundColor = System.Drawing.Color.Gray;
             this.dgvDoanhThu.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvDoanhThu.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDoanhThu.Location = new System.Drawing.Point(12, 375);
+            this.dgvDoanhThu.Location = new System.Drawing.Point(4, 378);
             this.dgvDoanhThu.Name = "dgvDoanhThu";
             this.dgvDoanhThu.ReadOnly = true;
-            this.dgvDoanhThu.Size = new System.Drawing.Size(806, 337);
+            this.dgvDoanhThu.RowHeadersWidth = 51;
+            this.dgvDoanhThu.Size = new System.Drawing.Size(591, 337);
             this.dgvDoanhThu.TabIndex = 4;
-            // 
-            // btnInThongKe
-            // 
-            this.btnInThongKe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnInThongKe.Image = global::QuanLyBenXe.Properties.Resources.printer__1_;
-            this.btnInThongKe.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnInThongKe.Location = new System.Drawing.Point(879, 672);
-            this.btnInThongKe.Name = "btnInThongKe";
-            this.btnInThongKe.Size = new System.Drawing.Size(189, 40);
-            this.btnInThongKe.TabIndex = 6;
-            this.btnInThongKe.Text = "In thống kê";
-            this.btnInThongKe.UseVisualStyleBackColor = true;
-            this.btnInThongKe.Click += new System.EventHandler(this.btnInThongKe_Click);
             // 
             // printDocument1
             // 
@@ -192,21 +180,21 @@
             // 
             // chartDoanhThu
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartDoanhThu.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartDoanhThu.Legends.Add(legend2);
-            this.chartDoanhThu.Location = new System.Drawing.Point(12, 12);
+            chartArea1.Name = "ChartArea1";
+            this.chartDoanhThu.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartDoanhThu.Legends.Add(legend1);
+            this.chartDoanhThu.Location = new System.Drawing.Point(4, 12);
             this.chartDoanhThu.Name = "chartDoanhThu";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Số vé đã bán";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Tổng tiền theo loại vé";
-            this.chartDoanhThu.Series.Add(series3);
-            this.chartDoanhThu.Series.Add(series4);
-            this.chartDoanhThu.Size = new System.Drawing.Size(1106, 347);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Số vé đã bán";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Tổng tiền theo loại vé";
+            this.chartDoanhThu.Series.Add(series1);
+            this.chartDoanhThu.Series.Add(series2);
+            this.chartDoanhThu.Size = new System.Drawing.Size(884, 347);
             this.chartDoanhThu.TabIndex = 7;
             this.chartDoanhThu.Text = "chart1";
             // 
@@ -215,17 +203,30 @@
             this.lblTongdoanhThu.AutoSize = true;
             this.lblTongdoanhThu.BackColor = System.Drawing.SystemColors.Control;
             this.lblTongdoanhThu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.lblTongdoanhThu.Location = new System.Drawing.Point(506, 715);
+            this.lblTongdoanhThu.Location = new System.Drawing.Point(0, 718);
             this.lblTongdoanhThu.Name = "lblTongdoanhThu";
             this.lblTongdoanhThu.Size = new System.Drawing.Size(136, 21);
             this.lblTongdoanhThu.TabIndex = 8;
             this.lblTongdoanhThu.Text = "Tổng doanh thu";
             // 
+            // btnInThongKe
+            // 
+            this.btnInThongKe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnInThongKe.Image = global::QuanLyBenXe.Properties.Resources.printer__1_;
+            this.btnInThongKe.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnInThongKe.Location = new System.Drawing.Point(639, 663);
+            this.btnInThongKe.Name = "btnInThongKe";
+            this.btnInThongKe.Size = new System.Drawing.Size(200, 40);
+            this.btnInThongKe.TabIndex = 6;
+            this.btnInThongKe.Text = "In thống kê";
+            this.btnInThongKe.UseVisualStyleBackColor = true;
+            this.btnInThongKe.Click += new System.EventHandler(this.btnInThongKe_Click);
+            // 
             // FrmThongKeDoanhThu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1130, 761);
+            this.ClientSize = new System.Drawing.Size(900, 761);
             this.Controls.Add(this.lblTongdoanhThu);
             this.Controls.Add(this.chartDoanhThu);
             this.Controls.Add(this.groupBox1);

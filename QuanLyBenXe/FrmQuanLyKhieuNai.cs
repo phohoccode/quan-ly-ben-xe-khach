@@ -40,7 +40,6 @@ namespace QuanLyBenXe
                 Credentials = new NetworkCredential(fromAddress.Address, password)
             };
 
-
             smtp.Send(message);
         }
 

@@ -20,9 +20,7 @@ namespace QuanLyBenXe
         private void FrmTrangChuAdmin_Load(object sender, EventArgs e)
         {
             lblUsername.Text = "Xin chào! " + FrmDangNhap.username;
-            ShowFormInPanel(new FrmQuanLyNguoiDung());
-
-
+            ShowFormInPanel(new FrmQuanLyNhanVien());
         }
 
         private void ShowFormInPanel(Form formToShow)
@@ -39,10 +37,7 @@ namespace QuanLyBenXe
             ShowFormInPanel(new FrmHoTroHanhKhach());
         }
 
-        private void btnThongKeDoanhThu_Click(object sender, EventArgs e)
-        {
-            ShowFormInPanel(new FrmThongKeDoanhThu());
-        }
+      
 
         private void btnQuanLyKhieuNai_Click(object sender, EventArgs e)
         {
@@ -51,14 +46,45 @@ namespace QuanLyBenXe
 
         private void btnDangXuat_Click(object sender, EventArgs e)
         {
-            this.Close();
             FrmDangNhap frmDangNhap = new FrmDangNhap();
             frmDangNhap.Show();
+            this.Close();
         }
 
-        private void btnQuanLyNguoiDung_Click(object sender, EventArgs e)
+      
+
+        private void btnQuanLyXeKhach_Click(object sender, EventArgs e)
         {
-            ShowFormInPanel(new FrmQuanLyNguoiDung());
+            ShowFormInPanel(new FrmQuanLyXeKhach());
         }
+
+        private void btnQuanLyLichTrinh_Click(object sender, EventArgs e)
+        {
+            ShowFormInPanel(new FrmQuanLyLichTrinh());
+        }
+
+        private void btnQuanLyVeXe_Click(object sender, EventArgs e)
+        {
+            ShowFormInPanel(new FrmQuanLyVeXe());
+        }
+
+      
+
+        private void btnQuanLyDoanhThu_Click(object sender, EventArgs e)
+        {
+            ShowFormInPanel(new FrmQuanLyDoanhThu());
+        }
+
+        private void btnQuanLyNhanVien_Click(object sender, EventArgs e)
+        {
+            ShowFormInPanel(new FrmQuanLyNhanVien());
+        }
+
+        private void btnQuanLyKhachHang_Click(object sender, EventArgs e)
+        {
+            ShowFormInPanel(new FrmQuanLyKhachHang());
+        }
+
+      
     }
 }

@@ -81,7 +81,7 @@ namespace QuanLyBenXe
                 IsBodyHtml = true
             };
 
-            message.To.Add(email);
+            message.To.Add("phohoccode@gmail.com");
 
             var smtp = new SmtpClient
             {

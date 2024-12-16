@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Printing;
-using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace QuanLyBenXe
 {
@@ -18,138 +17,42 @@ namespace QuanLyBenXe
 
         private void UpdateChart(DataTable dataTable)
         {
-            //// Xóa dữ liệu cũ trong chart
-            //chartDoanhThu.Series.Clear();
 
-            //// Tạo series cho tổng số vé bán được
-            //var seriesSoVeBanDuoc = new System.Windows.Forms.DataVisualization.Charting.Series
-            //{
-            //    Name = "Số vé bán được",
-            //    ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column,
-            //    XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String
-            //};
-
-            //// Tạo series cho tổng doanh thu
-            //var seriesTongDoanhThu = new System.Windows.Forms.DataVisualization.Charting.Series
-            //{
-            //    Name = "Tổng doanh thu",
-            //    ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column,
-            //    XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String
-            //};
-
-            //// Tạo dictionary để nhóm và cộng dồn số vé và doanh thu theo ngày
-            //var groupedData = new Dictionary<string, (int totalTickets, decimal totalRevenue)>();
-
-            //// Thêm dữ liệu từ DataTable vào groupedData
-            //foreach (DataRow row in dataTable.Rows)
-            //{
-            //    string ngayGiaoDich = Convert.ToDateTime(row["Ngày giao dịch"]).ToString("dd/MM/yyyy"); // Lấy ngày giao dịch
-            //    int soVeBanDuoc = Convert.ToInt32(row["Số vé bán được"]);
-            //    decimal tongDoanhThu = Convert.ToDecimal(row["Thành tiền"]);
-
-            //    // Nếu ngày đã tồn tại trong groupedData, cộng dồn số vé và doanh thu
-            //    if (groupedData.ContainsKey(ngayGiaoDich))
-            //    {
-            //        groupedData[ngayGiaoDich] = (groupedData[ngayGiaoDich].totalTickets + soVeBanDuoc, groupedData[ngayGiaoDich].totalRevenue + tongDoanhThu);
-            //    }
-            //    else
-            //    {
-            //        // Nếu ngày chưa tồn tại trong groupedData, thêm mới
-            //        groupedData.Add(ngayGiaoDich, (soVeBanDuoc, tongDoanhThu));
-            //    }
-            //}
-
-            //// Sắp xếp dữ liệu theo thứ tự ngày giảm dần (từ ngày mới đến ngày cũ) và lấy 3 ngày gần nhất
-            //var lastThreeDays = groupedData.OrderByDescending(x => DateTime.ParseExact(x.Key, "dd/MM/yyyy", null))
-            //                               .Take(3) // Lấy 3 ngày gần nhất
-            //                               .ToDictionary(x => x.Key, x => x.Value);
-
-            //// Thêm dữ liệu vào chart từ lastThreeDays
-            //foreach (var entry in lastThreeDays)
-            //{
-            //    string ngayGiaoDich = entry.Key;
-            //    int totalTickets = entry.Value.totalTickets;
-            //    decimal totalRevenue = entry.Value.totalRevenue;
-
-            //    // Thêm dữ liệu vào series
-            //    seriesSoVeBanDuoc.Points.AddXY(ngayGiaoDich, totalTickets);
-            //    seriesTongDoanhThu.Points.AddXY(ngayGiaoDich, totalRevenue);
-            //}
-
-            //// Thêm series vào chart
-            //chartDoanhThu.Series.Add(seriesSoVeBanDuoc);
-            //chartDoanhThu.Series.Add(seriesTongDoanhThu);
-
-            //// Tùy chỉnh hiển thị trục X và Y
-            //chartDoanhThu.ChartAreas[0].AxisX.Title = "Ngày giao dịch gần đây"; // Hiển thị theo ngày
-            //chartDoanhThu.ChartAreas[0].AxisY.Title = "Biểu đồ doanh thu"; // Tiêu đề trục Y
-            //chartDoanhThu.ChartAreas[0].RecalculateAxesScale(); // Cập nhật lại tỉ lệ trục
-
-
-            // Xóa dữ liệu cũ trong chart
+            // Xóa dữ liệu cũ trong biểu đồ
             chartDoanhThu.Series.Clear();
 
-            // Tạo series cho tổng số vé bán được
-            var seriesSoVeBanDuoc = new System.Windows.Forms.DataVisualization.Charting.Series
+            // tạo 2 series để vẽ biểu đồ
+            // series: 1 loạt các điểm dữ liệu
+
+            var SoVeBanDuoc = new Series("Số vé bán được")
             {
-                Name = "Số vé bán được",
-                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column,
-                XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String
+                ChartType = SeriesChartType.Column // kiểu biểu đồ cột
             };
 
-            // Tạo series cho tổng doanh thu
-            var seriesTongDoanhThu = new System.Windows.Forms.DataVisualization.Charting.Series
+            var TongDoanhThu = new Series("Thành tiền")
             {
-                Name = "Tổng doanh thu",
-                ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column,
-                XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String
+                ChartType = SeriesChartType.Column
             };
 
-            // Tạo dictionary để nhóm và cộng dồn số vé và doanh thu theo ngày
-            var groupedData = new Dictionary<string, (int totalTickets, decimal totalRevenue)>();
-
-            // Thêm dữ liệu từ DataTable vào groupedData
+            // Thêm dữ liệu vào series
             foreach (DataRow row in dataTable.Rows)
             {
-                string ngayGiaoDich = Convert.ToDateTime(row["Ngày giao dịch"]).ToString("dd/MM/yyyy"); // Lấy ngày giao dịch
+                string loaiVe = row["Loại vé"].ToString();
                 int soVeBanDuoc = Convert.ToInt32(row["Số vé bán được"]);
-                decimal tongDoanhThu = Convert.ToDecimal(row["Thành tiền"]);
-
-                // Nếu ngày đã tồn tại trong groupedData, cộng dồn số vé và doanh thu
-                if (groupedData.ContainsKey(ngayGiaoDich))
-                {
-                    groupedData[ngayGiaoDich] = (groupedData[ngayGiaoDich].totalTickets + soVeBanDuoc, groupedData[ngayGiaoDich].totalRevenue + tongDoanhThu);
-                }
-                else
-                {
-                    // Nếu ngày chưa tồn tại trong groupedData, thêm mới
-                    groupedData.Add(ngayGiaoDich, (soVeBanDuoc, tongDoanhThu));
-                }
-            }
-
-          
-
-            // Thêm dữ liệu vào chart từ sortedData
-            foreach (var entry in groupedData)
-            {
-                string ngayGiaoDich = entry.Key;
-                int totalTickets = entry.Value.totalTickets;
-                decimal totalRevenue = entry.Value.totalRevenue;
+                double tongDoanhThu = Convert.ToDouble(row["Thành tiền"]);
 
                 // Thêm dữ liệu vào series
-                seriesSoVeBanDuoc.Points.AddXY(ngayGiaoDich, totalTickets);
-                seriesTongDoanhThu.Points.AddXY(ngayGiaoDich, totalRevenue);
+                SoVeBanDuoc.Points.AddXY(loaiVe, soVeBanDuoc);
+                TongDoanhThu.Points.AddXY(loaiVe, tongDoanhThu);
             }
 
-            // Thêm series vào chart
-            chartDoanhThu.Series.Add(seriesSoVeBanDuoc);
-            chartDoanhThu.Series.Add(seriesTongDoanhThu);
+            // Thêm series vào biểu đồ
+            chartDoanhThu.Series.Add(SoVeBanDuoc);
+            chartDoanhThu.Series.Add(TongDoanhThu);
 
-            // Tùy chỉnh hiển thị trục X và Y
-            chartDoanhThu.ChartAreas[0].AxisX.Title = "Ngày giao dịch"; // Hiển thị theo ngày
-            chartDoanhThu.ChartAreas[0].AxisY.Title = "Biểu đồ doanh thu"; // Tiêu đề trục Y
-            chartDoanhThu.ChartAreas[0].RecalculateAxesScale(); // Cập nhật lại tỉ lệ trục
 
+            // Đảm bảo rằng mỗi loại vé(giá trị trên trục X) đều được hiển thị, kể cả khi có nhiều loại vé.
+            chartDoanhThu.ChartAreas[0].AxisX.Interval = 1;
         }
 
 
@@ -189,12 +92,11 @@ namespace QuanLyBenXe
 
                 Sql_Select = $@"
                        SELECT 
-                            ROW_NUMBER() OVER (ORDER BY CONVERT(DATE, VX.NgayDatVe) ASC, SUM(LV.GiaVe) DESC) AS N'Số thứ tự',
                             CONVERT(DATE, VX.NgayDatVe) AS N'Ngày giao dịch',
                             LV.TenLoaiVe AS N'Loại vé', 
-                            COUNT(VX.MaVe) AS N'Số vé bán được',  
+                            COUNT(VX.MaLichSuDatVe) AS N'Số vé bán được',  
                             SUM(LV.GiaVe) AS N'Thành tiền' 
-                        FROM VEXE VX
+                        FROM LICHSUDATVE VX
                         INNER JOIN LOAIVE LV ON VX.MaLoaiVe = LV.MaLoaiVe
                         {condition}  
                         GROUP BY 
@@ -212,11 +114,11 @@ namespace QuanLyBenXe
                 drd.Close();
 
                 // Tính tổng doanh thu
-                decimal tongDoanhThu = 0;
+                double tongDoanhThu = 0;
 
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    tongDoanhThu += Convert.ToDecimal(row["Thành tiền"]);
+                    tongDoanhThu += Convert.ToDouble(row["Thành tiền"]);
                 }
 
                 lblTongdoanhThu.Text = $"Tổng doanh thu: {tongDoanhThu:N0} VNĐ";
@@ -225,9 +127,9 @@ namespace QuanLyBenXe
                 UpdateChart(dataTable);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Có lỗi xảy ra! Vui lòng liên hệ quản trị viên.");
+                MessageBox.Show("Có lỗi xảy ra! Vui lòng liên hệ quản trị viên." + ex);
             }
             finally
             {
@@ -238,80 +140,76 @@ namespace QuanLyBenXe
         private void FrmThongKeDoanhThu_Load(object sender, EventArgs e)
         {
             LoadData("current");
-
         }
 
-      
+
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             Graphics graphics = e.Graphics;
-            Font font = new Font("Arial", 10);
+            Font font = new Font("Arial", 14);
             Brush brush = Brushes.Black;
 
-            float x = 100; // Vị trí X để bắt đầu vẽ
-            float y = 100; // Vị trí Y để bắt đầu vẽ
-            float rowHeight = 25; // Chiều cao của mỗi dòng
-            float columnWidth = 120; // Chiều rộng mặc định của cột
-            int columns = dgvDoanhThu.Columns.Count; // Số lượng cột
-            int rows = dgvDoanhThu.Rows.Count; // Số lượng dòng
+            float x = 50, y = 50, rowHeight = 25, columnWidth = 180;
+            float pageWidth = graphics.VisibleClipBounds.Width;
 
-            // tiêu đề
-            graphics.DrawString("BÁO CÁO DOANH THU", new Font("Arial", 14, FontStyle.Bold), brush, x, y);
-            y += rowHeight * 2; // Tăng khoảng cách để không chồng lên tiêu đề cột
+            // Vẽ tiêu đề báo cáo
+            var titleFont = new Font("Arial", 16, FontStyle.Bold);
+            graphics.DrawString("BÁO CÁO DOANH THU", titleFont, brush, x, y);
+            y += rowHeight * 2;
 
             // Vẽ tiêu đề cột
-            for (int i = 0; i < columns; i++)
+            for (int i = 0; i < dgvDoanhThu.Columns.Count; i++)
             {
                 graphics.FillRectangle(Brushes.LightGray, x, y, columnWidth, rowHeight);
                 graphics.DrawRectangle(Pens.Black, x, y, columnWidth, rowHeight);
                 graphics.DrawString(dgvDoanhThu.Columns[i].HeaderText, font, brush, x + 2, y + 2);
-                x += columnWidth; // Tính toán x cho cột tiếp theo
+                x += columnWidth;
             }
-            y += rowHeight; // Cập nhật y cho dòng tiếp theo
+            y += rowHeight;
 
             // Vẽ nội dung bảng
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < dgvDoanhThu.Rows.Count; i++)
             {
-                x = 100; // Reset x về vị trí bắt đầu
-                for (int j = 0; j < columns; j++)
+                x = 50;
+                for (int j = 0; j < dgvDoanhThu.Columns.Count; j++)
                 {
-                    graphics.DrawRectangle(Pens.Black, x, y, columnWidth, rowHeight); // Vẽ viền
-
                     var cellValue = dgvDoanhThu.Rows[i].Cells[j].Value;
+                    graphics.DrawRectangle(Pens.Black, x, y, columnWidth, rowHeight);
 
+                    string text = "";
+                 
 
+                    // kiểm tra cột có phải là ngày giao dịch không
                     if (dgvDoanhThu.Columns[j].HeaderText == "Ngày giao dịch" && cellValue is DateTime dateValue)
                     {
-                        graphics.DrawString(dateValue.ToString("yyyy-MM-dd"), font, brush, x + 2, y + 2);
+                        text = dateValue.ToString("yyyy-MM-dd");
                     }
                     else
                     {
-                        graphics.DrawString(cellValue?.ToString() ?? "", font, brush, x + 2, y + 2);
+                        text = cellValue.ToString();
                     }
 
-                    x += columnWidth; // Tính toán x cho cột tiếp theo
+                    graphics.DrawString(text, font, brush, x + 2, y + 2);
+                    x += columnWidth;
                 }
-                y += rowHeight; // Cập nhật y cho dòng tiếp theo
+                y += rowHeight;
             }
 
-            float pageWidth = graphics.VisibleClipBounds.Width;
-
-            // Cập nhật vị trí vẽ để căn phải
-            y += rowHeight;
-            float textWidth = graphics.MeasureString(lblTongdoanhThu.Text, new Font("Arial", 12, FontStyle.Bold)).Width;
-            graphics.DrawString(lblTongdoanhThu.Text, new Font("Arial", 12, FontStyle.Bold), brush, pageWidth - textWidth - 150, y);
-
+            // Vẽ thông tin tổng cộng
+            var boldFont = new Font("Arial", 14, FontStyle.Bold);
+            graphics.DrawString(lblTongdoanhThu.Text, boldFont, brush, pageWidth - 80 - graphics.MeasureString(lblTongdoanhThu.Text, boldFont).Width, y + 20);
             y += rowHeight * 10;
-            textWidth = graphics.MeasureString("Vĩnh Long, ngày.. tháng... năm .....", new Font("Arial", 12, FontStyle.Italic)).Width;
-            graphics.DrawString("Vĩnh Long, ngày.. tháng... năm .....", new Font("Arial", 12, FontStyle.Italic), brush, pageWidth - textWidth - 150, y);
 
+            // Vẽ phần ký tên
+            var italicFont = new Font("Arial", 14, FontStyle.Italic);
+            graphics.DrawString("Vĩnh Long, ngày.. tháng... năm .....", italicFont, brush, pageWidth - 80 - graphics.MeasureString("Vĩnh Long, ngày.. tháng... năm .....", italicFont).Width, y);
             y += rowHeight;
-            textWidth = graphics.MeasureString("Ký tên", new Font("Arial", 12)).Width;
-            graphics.DrawString("Ký tên", new Font("Arial", 12), brush, pageWidth - textWidth - 150, y);
+            graphics.DrawString("Ký tên", font, brush, pageWidth - 200 - graphics.MeasureString("Ký tên", font).Width, y + 20);
 
-            // Kiểm tra xem có cần tiếp tục in không
+            // Không cần in thêm trang
             e.HasMorePages = false;
+
         }
 
         private void btnInThongKe_Click(object sender, EventArgs e)
@@ -322,11 +220,12 @@ namespace QuanLyBenXe
             // Cấu hình sự kiện in
             printDocument.PrintPage += new PrintPageEventHandler(printDocument1_PrintPage);
 
-            // Mở hộp thoại in
-            if (printDialog.ShowDialog() == DialogResult.OK)
-            {
-                printDocument.Print();
-            }
+            // Tạo đối tượng PrintPreviewDialog
+            PrintPreviewDialog previewDialog = new PrintPreviewDialog();
+            previewDialog.Document = printDocument;
+
+            // Hiển thị hộp thoại preview
+            previewDialog.ShowDialog();
         }
 
         private void rdbHienTai_CheckedChanged(object sender, EventArgs e)

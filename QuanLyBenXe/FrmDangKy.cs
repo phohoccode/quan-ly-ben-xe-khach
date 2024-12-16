@@ -11,6 +11,18 @@ namespace QuanLyBenXe
             InitializeComponent();
         }
 
+        private bool checkContrainsNumber(string str)
+        {
+            foreach (char c in str)
+            {
+                if (char.IsDigit(c))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private bool checkValidEmail(string email)
         {
             try
@@ -58,6 +70,13 @@ namespace QuanLyBenXe
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
 
+            if (checkContrainsNumber(username))
+            {
+                MessageBox.Show("Họ và tên không được chứa số!");
+                txtUsername.Focus();
+                return;
+            }
+
 
             if (!checkValidEmail(email))
             {
@@ -79,7 +98,7 @@ namespace QuanLyBenXe
 
             try
             {
-                string Sql_FindEmail = $@"Select email from KHACHHANG Where email = '{email}'";
+                string Sql_FindEmail = $@"SELECT Email FROM KHACHHANG WHERE Email = '{email}'";
 
                 SqlDataReader drd = conn.executeSQL(Sql_FindEmail);
 
@@ -96,8 +115,7 @@ namespace QuanLyBenXe
 
 
                 string Sql_Register =
-                    $@"Insert into KHACHHANG (HoTen, Email, Matkhau, MaQuyenHan) values (N'{username}','{email}', '{password}', 1)";
-
+                    $@"INSERT INTO KHACHHANG (HoTen, Email, Matkhau, MaQuyenHan, TrangThai) VALUES (N'{username}','{email}', '{password}', 1, 0)";
 
 
                 int rows = conn.executeUpdate(Sql_Register);
